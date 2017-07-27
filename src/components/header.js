@@ -9,7 +9,7 @@ export default function Header(props) {
     return (
         <header>
             <TopNav handleModal={props.handleModal} onClick={props.onClick}/>
-            <InfoModal modalClosed={props.modalClosed}/> 
+            <InfoModal  handleModal={props.handleModal} modalClosed={props.modalClosed}/> 
             <h1>HOT or COLD</h1>
         </header>
     );
