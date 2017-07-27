@@ -11,54 +11,61 @@ export default class Game extends React.Component {
         this.state = {
             computerAnswer: Math.floor((Math.random() * 100) + 1),
             input: 0,
-            mostRecentGuess: 25,
-            guesses: [10,15],
+            guesses: [],
             feedback: "Make your guess!"
         }
     }
     
     onSubmit(e) {
-        console.log('onSubmit active');
         e.preventDefault();
 
+        // Input validation
+        if (this.state.guesses.includes(this.state.input)) {
+            alert('You guessed this number already');
+            return null;
+        }
 
-  /*
-        // feedback
-        if (comps value and user value)
-        cold >= 50
-        feedback = 'Cold'
-        kinda hot >= 30
-        feedback = 'Kinda Hot'
-        hot >= 10
-        feedback = 'Hot'
-        else "you win"
+        if (isNaN(this.state.input)) {
+            alert('Please input a number');
+            return null;
+        }
+
+        let difference = Math.abs(this.state.computerAnswer-this.state.input);
+        let feedbackMessage; 
         
-*/
-
-
-
+        if (difference >= 50){
+            feedbackMessage = 'Cold';
+        } else if (difference >= 30) {
+            feedbackMessage = 'Kinda hot';
+        } else if (difference >= 10) {
+            feedbackMessage = 'Hot';
+        } else if (difference >= 1) {
+            feedbackMessage = 'Super hot';
+        } else if (difference === 0) {
+            feedbackMessage = 'You win!!';
+        } else {
+            feedbackMessage = 'Something went wrong';
+        }
+    
         this.setState({
+            feedback: feedbackMessage,
             guesses: [...this.state.guesses, this.state.input]
         })
+    }
 
-
-
-        // [X] Grab value
-        // [X] Add value into state
-        // [ ] Display feedback                
-        // [ ] Set State
-
+    onClick() {
+        this.setState({
+            computerAnswer: Math.floor((Math.random() * 100) + 1),
+            input: 0,
+            guesses: [],
+            feedback: "Make your guess!"
+        })
     }
 
     render() {
-        // Input: GuessSection > Guess-form
-        // Mostrecentguess: GuessList
-        // Guesses: start as empty array, push mostRecentGuess into it. GuessList
-        console.log('current state input value ' + this.state.input);
-        console.log('guessess in state: ', this.state.guesses)
         return (
                 <div>
-                    <Header />
+                    <Header onClick={() => this.onClick()}/>
                     <GuessSection onChange={input => this.setState({input})} onSubmit={(e) => this.onSubmit(e)} feedback={this.state.feedback} />
                     <GuessCount count={this.state.guesses.length} />
                     <GuessList guesses={this.state.guesses} />
@@ -66,11 +73,3 @@ export default class Game extends React.Component {
             );
     }
 }
-
-// TO DO: 
-
-// 1. [X] Add onChange in guess-form.js to the input.
-// 2. [X] Console.log('current state input value' + this.state.input);
-// 3. [ ] Alter onSubmit function in game.js to update state, and then render the page 
-// 4. [ ] Only accept number values
-// 5. [ ] Make your guess!, cold, hot, kinda hot, (You Won. Click new game to play again.)
