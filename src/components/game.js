@@ -5,12 +5,6 @@ import GuessSection from './guess-section';
 import GuessCount  from './guess-count';
 import GuessList from './guess-list';
 
-// To Have in state:
-    // Make your guess!, cold, hot, kinda hot, (You Won. Click new game to play again.)
-
-// Add interactvity
-
-// Add randomizer function for computer answer on game.js
 export default class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -24,24 +18,48 @@ export default class Game extends React.Component {
     }
     
     onSubmit(e) {
+        console.log('onSubmit active');
         e.preventDefault();
-        // console.log('doasfkjdasfl')
-        // console.log("value " + this.input.value);
-        // console.log("e " + e.target.value);
-        // this.onSubmit({e});
-        // this.state.guesses.push({this.state.input});
-        // ...this.state.guesses, input
+
+
+  /*
+        // feedback
+        if (comps value and user value)
+        cold >= 50
+        feedback = 'Cold'
+        kinda hot >= 30
+        feedback = 'Kinda Hot'
+        hot >= 10
+        feedback = 'Hot'
+        else "you win"
+        
+*/
+
+
+
+        this.setState({
+            guesses: [...this.state.guesses, this.state.input]
+        })
+
+
+
+        // [X] Grab value
+        // [X] Add value into state
+        // [ ] Display feedback                
+        // [ ] Set State
+
     }
 
     render() {
         // Input: GuessSection > Guess-form
         // Mostrecentguess: GuessList
         // Guesses: start as empty array, push mostRecentGuess into it. GuessList
-        
+        console.log('current state input value ' + this.state.input);
+        console.log('guessess in state: ', this.state.guesses)
         return (
                 <div>
                     <Header />
-                    <GuessSection onChange={input => this.setState({input})} onSubmit={this.onSubmit} feedback={this.state.feedback} />
+                    <GuessSection onChange={input => this.setState({input})} onSubmit={(e) => this.onSubmit(e)} feedback={this.state.feedback} />
                     <GuessCount count={this.state.guesses.length} />
                     <GuessList guesses={this.state.guesses} />
                 </div>
@@ -51,6 +69,8 @@ export default class Game extends React.Component {
 
 // TO DO: 
 
-// 1. Add onChange in guess-form.js to the input.
-// 2. Console.log('current state input value' + this.state.input);
-// 3. Alter onSubmit function in game.js to update state, and then render the page 
+// 1. [X] Add onChange in guess-form.js to the input.
+// 2. [X] Console.log('current state input value' + this.state.input);
+// 3. [ ] Alter onSubmit function in game.js to update state, and then render the page 
+// 4. [ ] Only accept number values
+// 5. [ ] Make your guess!, cold, hot, kinda hot, (You Won. Click new game to play again.)
