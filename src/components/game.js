@@ -59,18 +59,21 @@ export default class Game extends React.Component {
             computerAnswer: Math.floor((Math.random() * 100) + 1),
             input: 0,
             guesses: [],
-            feedback: "Make your guess!"
+            feedback: "Make your guess!",
+            modalClosed: true
         })
     }
 
-    openModal() {
-
+    handleModal() {
+        this.setState({
+            modalClosed: !(this.state.modalClosed)
+        })
     }
 
     render() {
         return (
                 <div>
-                    <Header modalClosed={this.state.modalClosed} onClick={() => this.onClick()}/>
+                    <Header modalClosed={this.state.modalClosed} handleModal={() => this.handleModal()} onClick={() => this.onClick()}/>
                     <GuessSection onChange={input => this.setState({input})} onSubmit={(e) => this.onSubmit(e)} feedback={this.state.feedback} />
                     <GuessCount count={this.state.guesses.length} />
                     <GuessList guesses={this.state.guesses} />
